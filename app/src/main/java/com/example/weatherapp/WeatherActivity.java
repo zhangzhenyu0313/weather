@@ -1,5 +1,6 @@
 package com.example.weatherapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.weatherapp.gson.Forecast;
 import com.example.weatherapp.gson.Weather;
+import com.example.weatherapp.service.AutoUpdateService;
 import com.example.weatherapp.util.HttpUtil;
 import com.example.weatherapp.util.Utility;
 
@@ -144,7 +146,7 @@ public class WeatherActivity extends AppCompatActivity {
     /*根据天气ID请求天气信息*/
     public void requestWeather(final String weatherId) {
         String weatherUrl = "https://free-api.heweather.com/s6/weather/forecast?cityid = "+
-                weatherId+"&key=fc194cfc7682414b8b564862485a72f5";
+                weatherId+"&key=3e2b7eda0bbb4d938b93931ed1c13581";
         HttpUtil.sendOKHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -220,6 +222,9 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this,AutoUpdateService.class);
+        startService(intent);
+
     }
 
     //初识化控件
